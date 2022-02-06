@@ -6,24 +6,12 @@ import java.util.List;
 import java.util.function.UnaryOperator;
 
 //Number It's an abstract class it can not be intance instead of It can be inheritance
-
-interface SerVivo extends Comparable<SerVivo> {
+interface SerVivo {
 
 }
 
-class Johan implements Comparable<Johan> {
 
-    private String name;
-    private Integer age;
-
-    @Override
-    public int compareTo(Johan o) {
-        return this.age.compareTo(o.age);
-    }
-}
-
-
-class Person implements SerVivo {
+class Person implements SerVivo, Comparable<Person> {
     private String name;
     private String lastName;
     private int age;
@@ -59,16 +47,23 @@ class Person implements SerVivo {
     }
 
     @Override
-    public int compareTo(SerVivo o) {
+    public int compareTo(Person o) {
+        return getLastName().compareTo(o.getLastName());
+    }
+}
+
+class Animal implements SerVivo, Comparable<Animal> {
+
+    @Override
+    public int compareTo(Animal o) {
         return 0;
     }
 }
 
-class Animal implements SerVivo {
+class Johan extends Person {
 
-    @Override
-    public int compareTo(SerVivo o) {
-        return 0;
+    public Johan(String name, String lastName, int age) {
+        super(name, lastName, age);
     }
 }
 
@@ -92,20 +87,27 @@ public class NumericsFns<T extends Number> {
         return false;
     }
 
-    private void test() {
-        Person person = new Person("joha", "mora", 45);
+    void test() {
+        Johan johan = new Johan("johan0", "d", 33);
         Animal animal = new Animal();
-        person.compareTo(animal);
-        Johan johan1 = new Johan();
-        Johan johan2 = new Johan();
+        // System.out.println("First comparation "+ johan.compareTo(animal));
 
-        System.out.println(johan1.compareTo(johan2));
 
-        List<SerVivo> serVivos = Arrays.asList(person, animal);
-        List<Person> personas = Arrays.asList(person);
+        Johan johan1 = new Johan("johan1", "c", 33);
+        Johan johan2 = new Johan("Johan2", "b", 33);
+        Person person = new Person("person", "a", 45);
+        System.out.println("Second comparation " + johan1.compareTo(johan2));
 
-        Collections.sort(personas);
+
+        List<SerVivo> serVivos = Arrays.asList(johan, johan1, johan2, animal);
+        List<SerVivo> serVivos2 = Arrays.asList(johan, johan1, johan2);
+        List<Person> personas = Arrays.asList(johan, johan1, johan2);
+        List<Person> personas2 = Arrays.asList(johan, johan1, johan2, person);
+
         Collections.sort(serVivos);
+        Collections.sort(serVivos2);
+        Collections.sort(personas);
+        Collections.sort(personas2);
     }
 
 }
